@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Babylon.js Demo</title>
+
+    <style>
+        body {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        #basemodel,
+        #dressedmodel {
+            flex-basis: 50%;
+            /* Occupy half of the container's width */
+            height: 600px;
+            /* Taller containers as requested */
+        }
+
+        #view-container {
+            flex-basis: 100%;
+            /* Occupy the remaining half */
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            /* 3 columns as requested */
+            height: 100%;
+            /* Taller containers as requested */
+            gap: 10px;
+            /* Adjust the gap between grid items if needed */
+        }
+
+        #model-container {
+            flex-basis: 50%;
+            /* Occupy the remaining half */
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            /* 3 columns as requested */
+            height: 550px;
+            /* Taller containers as requested */
+            gap: 20px;
+            /* Adjust the gap between grid items if needed */
+            margin-left: 10%;
+        }
+
+        #girth-container {
+            flex-basis: 50%;
+            /* Occupy the remaining half */
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            /* 3 columns as requested */
+            gap: 5px;
+            /* Adjust the gap between grid items if needed */
+        }
+
+        .canvas-container {
+            width: 100%;
+            height: 200px;
+            /* Adjust based on your preference */
+        }
+
+        .girth-container {
+            width: 100%;
+            height: 200px;
+            /* Adjust based on your preference */
+        }
+
+        canvas {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="view-container">
+
+        <div id="model-container">
+            <div id="basemodel" class="canvas-container"></div>
+            <div id="dressedmodel" class="canvas-container"></div>
+        </div>
+
+        <div id="girth-container">
+            <!--<tr><div id="girth-chest" class="canvas-container"></div>-->
+            <div id="girth-bust" class="canvas-container">Bust </div>
+            <!--<div id="girth-underbust" class="canvas-container"></div>-->
+            <div id="girth-waist" class="canvas-container">Waist</div>
+            <!--<div id="girth-belly" class="canvas-container"></div>-->
+            <!--<div id="girth-highhip" class="canvas-container"></div>-->
+            <div id="girth-hip" class="canvas-container">Hip</div>
+            </table>
+        </div>
+    </div>
+    <!-- Include BABYLON.js and loaders from a CDN or your own hosted files -->
+    <script src="https://cdn.babylonjs.com/babylon.js"></script>
+    <!-- Include any other BABYLON.js extensions or loaders you need here -->
+    <script src="https://cdn.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
+
+    <!-- Your application script -->
+    <script src="app.js"></script>
+</body>
+
+</html>

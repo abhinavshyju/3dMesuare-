@@ -1,0 +1,73 @@
+<html>
+  <head>
+    <title>Fit Calculator</title>
+  </head>
+  <body>
+    <h1>Fit Calculator</h1>
+    <form>
+      <label for="measurement">Measurement:</label>
+      <input type="number" id="measurement" name="measurement">
+      <br>
+      <label for="bust">Bust:</label>
+      <input type="number" id="bust" name="bust">
+      <br>
+      <label for="waist">Waist:</label>
+      <input type="number" id="waist" name="waist">
+      <br>
+      <button type="submit">Calculate Fit</button>
+    </form>
+    <p id="fit"></p>
+    <script>
+      const measurement = document.getElementById("measurement");
+      const bust = document.getElementById("bust");
+      const waist = document.getElementById("waist");
+      const fit = document.getElementById("fit");
+
+      const calculateFit = () => {
+        const value = measurement.value;
+        const bustValue = bust.value;
+        const waistValue = waist.value;
+
+        if (value >= 0 && value <= 5) {
+          fit.textContent = "Tight Fit";
+        } else if (value > 5 && value <= 10) {
+          fit.textContent = "Regular Fit";
+        } else if (value > 10 && value <= 15) {
+          fit.textContent = "Loose Fit";
+        } else if (value > 15 && value <= 25) {
+          fit.textContent = "Very Loose Fit";
+        } else {
+          fit.textContent = "Invalid Measurement";
+        }
+
+        if (bustValue >= 0 && bustValue <= 5) {
+          fit.textContent += "Tight Fit";
+        } else if (bustValue > 5 && bustValue <= 10) {
+          fit.textContent += "Regular Fit";
+        } else if (bustValue > 10 && bustValue <= 15) {
+          fit.textContent += "Loose Fit";
+        } else if (bustValue > 15 && bustValue <= 25) {
+          fit.textContent += "Very Loose Fit";
+        } else {
+          fit.textContent += "Invalid Measurement";
+        }
+
+        if (waistValue >= 0 && waistValue <= 5) {
+          fit.textContent += "Tight Fit";
+        } else if (waistValue > 5 && waistValue <= 10) {
+          fit.textContent += "Regular Fit";
+        } else if (waistValue > 10 && waistValue <= 15) {
+          fit.textContent += "Loose Fit";
+        } else if (waistValue > 15 && waistValue <= 25) {
+          fit.textContent += "Very Loose Fit";
+        } else {
+          fit.textContent += "Invalid Measurement";
+        }
+      };
+
+      measurement.addEventListener("input", calculateFit);
+      bust.addEventListener("input", calculateFit);
+      waist.addEventListener("input", calculateFit);
+    </script>
+  </body>
+</html>
