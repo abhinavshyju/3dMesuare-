@@ -3,6 +3,7 @@ const arrScene = []; // array of scenes - {scene, canvas, name, idx }
 const createScene = function (canvas, name, idx) {
   const engine = new BABYLON.Engine(canvas, true);
   const scene = new BABYLON.Scene(engine);
+  scene.clearColor = new BABYLON.Color3(0.52, 0.52, 0.52);
 
   // Initial camera position doesn't matter much as we will reposition it later
   const camera = new BABYLON.ArcRotateCamera(
@@ -125,46 +126,28 @@ async function getgirthPoints(pointsJson, girthName) {
   }
 }
 
-async function render3DPoints(
-  scene,
-  points,
-  color,
-  bconfigCamera,
-  scalingFactor = 1
-) {
+function render3DPoints(scene, points, color) {
   const pointsVector3 = points.map((p) => new BABYLON.Vector3(p.x, p.y, p.z));
-  // Apply scaling factor to each point
-  const scaledPoints = points.map(
-    (p) =>
-      new BABYLON.Vector3(
-        p.x * scalingFactor,
-        p.y * scalingFactor,
-        p.z * scalingFactor
-      )
-  );
 
   // Create lines from the points
   const lines = BABYLON.MeshBuilder.CreateLines(
     "lines",
     {
-      points: scaledPoints,
-      updatable: true,
+      points: pointsVector3,
+      updatable: false,
     },
     scene
   );
 
   // Set the color of the lines
   lines.color = new BABYLON.Color3(color.r, color.g, color.b);
-  lines.alwaysSelectAsActiveMesh = true;
-  lines.material.depthWrite = false;
-  // lines.material.depthFunction = BABYLON.Engine.ALWAYS;
 
   // Calculate the bounding box of the points
   const boundingInfo = lines.getBoundingInfo();
   const boundingBox = boundingInfo.boundingBox;
 
   // Adjust the camera to fit the points
-  if (bconfigCamera) fitCameraToBoundingBox(scene.activeCamera, boundingBox);
+  fitCameraToBoundingBox(scene.activeCamera, boundingBox);
 }
 
 function fitCameraToBoundingBox(camera, boundingBox) {
@@ -184,14 +167,6 @@ function fitCameraToBoundingBox(camera, boundingBox) {
 
 async function loadGirths() {
   const girths = [
-    [
-      "girth-chest",
-      "Chest Contoured",
-      "UA_women_scaled1.json",
-      "UA_women_with_dress_r.json",
-      { r: 0, g: 1, b: 0 },
-      { r: 0, g: 0, b: 1 },
-    ],
     [
       "girth-bust",
       "Bust Contoured",
@@ -226,175 +201,16 @@ async function loadGirths() {
     ],
     // Add other girths as needed...
   ];
-  const basescene = arrScene[0].scene;
-  const dressedscene = arrScene[1].scene;
+
   girths.forEach(async (girth) => {
     const sceneContainer = arrScene.find((sc) => sc.name === girth[0]);
     if (sceneContainer) {
       const points1 = await getgirthPoints(girth[2], girth[1]);
       const points2 = await getgirthPoints(girth[3], girth[1]);
-      await render3DPoints(sceneContainer.scene, points1, girth[4], true);
-      await render3DPoints(basescene, points1, girth[4], false, 0.1);
-      await render3DPoints(sceneContainer.scene, points2, girth[5], true);
-      await render3DPoints(dressedscene, points2, girth[5], false, 0.1);
-      renderIntersectionPoints(
-        sceneContainer.scene,
-        points1,
-        { r: 1, g: 1, b: 0 },
-        1
-      );
-      renderIntersectionPoints(
-        sceneContainer.scene,
-        points2,
-        { r: 0, g: 1, b: 1 },
-        1
-      );
-      renderIntersectionPoints(basescene, points1, { r: 1, g: 1, b: 0 }, 0.1);
-      renderIntersectionPoints(
-        dressedscene,
-        points2,
-        { r: 0, g: 1, b: 1 },
-        0.1
-      );
+      render3DPoints(sceneContainer.scene, points1, girth[4]);
+      render3DPoints(sceneContainer.scene, points2, girth[5]);
     }
   });
-}
-
-/**
- * Finds intersection points of a line with a specified plane (X=0 or Z=0).
- * @param {Array} points - An array of points forming the line.
- * @param {String} axis - The axis along which the plane is defined ('X' or 'Z').
- * @param {Number} planeValue - The value on the specified axis where the plane is located (usually 0 for X=0 or Z=0 planes).
- * @returns {Array} An array of intersection points.
- */
-function findIntersections(points, axis, planeValue) {
-  let intersections = [];
-
-  for (let i = 0; i < points.length - 1; i++) {
-    const start = points[i];
-    const end = points[i + 1];
-
-    // Check for intersection with the specified plane.
-    if (axis === "X") {
-      // Check if the line crosses the X=planeValue plane.
-      if (
-        (start.x <= planeValue && end.x >= planeValue) ||
-        (start.x >= planeValue && end.x <= planeValue)
-      ) {
-        const t = (planeValue - start.x) / (end.x - start.x);
-        const y = start.y + t * (end.y - start.y);
-        const z = start.z + t * (end.z - start.z);
-        intersections.push({ x: planeValue, y, z });
-      }
-    } else if (axis === "Z") {
-      // Check if the line crosses the Z=planeValue plane.
-      if (
-        (start.z <= planeValue && end.z >= planeValue) ||
-        (start.z >= planeValue && end.z <= planeValue)
-      ) {
-        const t = (planeValue - start.z) / (end.z - start.z);
-        const x = start.x + t * (end.x - start.x);
-        const y = start.y + t * (end.y - start.y);
-        intersections.push({ x, y, z: planeValue });
-      }
-    }
-  }
-
-  return intersections;
-}
-
-function renderIntersectionPoints(scene, points, color, scalingFactor) {
-  // Step 1: Calculate Intersection Points
-  const z0Intersections = findIntersections(points, "Z", 0);
-  const x0Intersections = findIntersections(points, "X", 0);
-  // find max x
-  const pointx = z0Intersections[0];
-  // intersection points on plane represented by max x/2 <= Princess plane
-  const xmidIntersections = findIntersections(points, "X", pointx.x / 2);
-  const x_midIntersections = findIntersections(
-    points,
-    "X",
-    (pointx.x / 2) * -1
-  );
-
-  // Step 2: Render Intersection Points
-  z0Intersections.forEach((point) =>
-    renderPoint(scene, point, color, scalingFactor)
-  );
-  x0Intersections.forEach((point) =>
-    renderPoint(scene, point, color, scalingFactor)
-  );
-  xmidIntersections.forEach((point) =>
-    renderPoint(scene, point, color, scalingFactor)
-  );
-  x_midIntersections.forEach((point) =>
-    renderPoint(scene, point, color, scalingFactor)
-  );
-}
-
-function renderPoint(scene, point, color, scalingFactor) {
-  const sphere = BABYLON.MeshBuilder.CreateSphere(
-    "sphere",
-    { diameter: 10 * scalingFactor },
-    scene
-  );
-  sphere.position = new BABYLON.Vector3(
-    point.x * scalingFactor,
-    point.y * scalingFactor,
-    point.z * scalingFactor
-  );
-  sphere.material = new BABYLON.StandardMaterial("material", scene);
-  sphere.material.diffuseColor = new BABYLON.Color3(color.r, color.g, color.b);
-}
-
-function findIntersectionPoints(points) {
-  let intersectionsY = []; // Intersections with Y=0 plane
-  let intersectionsZ = []; // Intersections with Z=0 plane
-
-  for (let i = 0; i < points.length - 1; i++) {
-    const p1 = points[i];
-    const p2 = points[i + 1];
-
-    // Intersection with Y=0
-    if ((p1.y > 0 && p2.y < 0) || (p1.y < 0 && p2.y > 0)) {
-      const fraction = Math.abs(p1.y) / (Math.abs(p1.y) + Math.abs(p2.y));
-      intersectionsY.push({
-        x: p1.x + (p2.x - p1.x) * fraction,
-        y: 0,
-        z: p1.z + (p2.z - p1.z) * fraction,
-      });
-    }
-
-    // Intersection with Z=0
-    if ((p1.z > 0 && p2.z < 0) || (p1.z < 0 && p2.z > 0)) {
-      const fraction = Math.abs(p1.z) / (Math.abs(p1.z) + Math.abs(p2.z));
-      intersectionsZ.push({
-        x: p1.x + (p2.x - p1.x) * fraction,
-        y: p1.y + (p2.y - p1.y) * fraction,
-        z: 0,
-      });
-    }
-  }
-
-  return { intersectionsY, intersectionsZ };
-}
-
-function calculateMinimumDistance(point1, pointsSet2) {
-  let minDistance = Infinity; // Start with a very large number
-
-  pointsSet2.forEach((point2) => {
-    // distance = sqrt( x^2 + x^2 + y^2 )
-    const distance = Math.sqrt(
-      Math.pow(point1.x - point2.x, 2) +
-        Math.pow(point1.y - point2.y, 2) +
-        Math.pow(point1.z - point2.z, 2)
-    );
-    if (distance < minDistance) {
-      minDistance = distance;
-    }
-  });
-
-  return minDistance;
 }
 
 init();

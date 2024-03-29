@@ -1,3 +1,4 @@
+//Data that we will for looping the function and for sort the data
 const DataLoop = [
   "label",
   "CF",
@@ -9,6 +10,13 @@ const DataLoop = [
   "SSL",
   "PSFL",
 ];
+
+//Data to find from the json file (Label the name of nearby coordinates from the json)
+
+// __________________________________________________________________________________________________________________________//
+// If you want to find more points just add obejects in this array And also add the same thing in the " DataToDisplay".
+// __________________________________________________________________________________________________________________________//
+
 const DataToFind = [
   {
     label: "Bust",
@@ -45,7 +53,8 @@ const DataToFind = [
   },
 ];
 
-const DataAdded = [
+// Data that return from the FindMinimumDistance Function
+const DataToDisplay = [
   {
     label: "Bust",
     girth: 0,
@@ -84,6 +93,7 @@ const DataAdded = [
   },
 ];
 
+//Function for displaying the data in a table format.
 const displayDataInTable = (data) => {
   data.forEach((item) => {
     const row = document.querySelector(`#tr-${item.label.toLowerCase()}`);
@@ -99,7 +109,22 @@ const displayDataInTable = (data) => {
   });
 };
 
-const FetchDataOne = fetch("http://127.0.0.1:5500/UA_women_scaled1.json")
+// Json data fetching Function
+const FetchDatawithOutDress = fetch(
+  "http://127.0.0.1:5500/UA_women_scaled1.json"
+)
+  .then((response) => response.json())
+  .then((data) => {
+    return data.body.result.metrics;
+  })
+  .catch((error) => {
+    console.error("Error fetching data:", error);
+    throw error;
+  });
+// Json data fetching Function
+const FetchDataWithDress = fetch(
+  "http://127.0.0.1:5500/UA_women_with_dress_r.json"
+)
   .then((response) => response.json())
   .then((data) => {
     return data.body.result.metrics;
@@ -109,23 +134,14 @@ const FetchDataOne = fetch("http://127.0.0.1:5500/UA_women_scaled1.json")
     throw error;
   });
 
-const FetchDataTwo = fetch("http://127.0.0.1:5500/UA_women_with_dress_r.json")
-  .then((response) => response.json())
-  .then((data) => {
-    return data.body.result.metrics;
-  })
-  .catch((error) => {
-    console.error("Error fetching data:", error);
-    throw error;
-  });
-
+// Calculate the distance  between two points
 const calculateDistance = (point1, point2) => {
   const [x1, y1, z1] = point1;
   const [x2, y2, z2] = point2;
   return Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2 + (z2 - z1) ** 2);
 };
 
-//Variable for minimum distance
+// Minimum distance Function for finding the minimum distance
 const FindMinimumDistance = (landmarkCoordinate, nearbyCoordinates) => {
   let minDistance = Number.POSITIVE_INFINITY;
 
@@ -140,13 +156,14 @@ const FindMinimumDistance = (landmarkCoordinate, nearbyCoordinates) => {
   return minDistance;
 };
 
-// Minimum distance
-Promise.all([FetchDataOne, FetchDataTwo])
+// Proccessing  the data from the Two json file and Formating the data for displaying
+Promise.all([FetchDatawithOutDress, FetchDataWithDress])
   .then(([one, two]) => {
     DataToFind.forEach((e) => {
       const nearbyCoordinates = two.girths
         .filter((i) => i.label === e.label)
         .map((i) => i.pointcollection);
+      // Changing the data format.(form {x:***,y:***,z:***} to [***,***,***])
       const transformedNearbyCoordinates = nearbyCoordinates[0][0].map(
         (obj) => [obj.x, obj.y, obj.z]
       );
@@ -161,12 +178,14 @@ Promise.all([FetchDataOne, FetchDataTwo])
         if (!landmarkCoordinate[0]) {
           console.log("Non");
         } else {
+          // Changing the data format.(form {x:***,y:***,z:***} to [***,***,***])
           const transformedLandmarkCoordinate = landmarkCoordinate.map(
             (obj) => [obj.x, obj.y, obj.z]
           );
-          DataAdded.forEach((z) => {
+          DataToDisplay.forEach((z) => {
             if (z.label === e.label) {
               z.girth = Girth;
+              // Calling the FindMinimumDistance and assigning the return value to corresponding varible.
               z[i] = FindMinimumDistance(
                 transformedLandmarkCoordinate[0],
                 transformedNearbyCoordinates
@@ -176,8 +195,8 @@ Promise.all([FetchDataOne, FetchDataTwo])
         }
       });
     });
-
-    displayDataInTable(DataAdded);
+    // Display Table function calling
+    displayDataInTable(DataToDisplay);
   })
   .catch((error) => {
     console.error("Error:", error);

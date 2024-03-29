@@ -1,87 +1,266 @@
-export const points = [
-  [-103.44920816134074, 144.90353020799242, -6.697006419703103],
-  [105.60146547783901, 144.0764167079097, -5.355959657433299],
-  [105.6473929855068, 144.0761826246243, -5.334954814916747],
-  [105.68320351464718, 144.07599630595698, -5.317074368450233],
-  [105.7125031949809, 144.07577676655418, -5.275911114369589],
-  [105.73458489785271, 144.07560534942547, -5.242530994244318],
-  [105.73938787109407, 144.07545907587635, -5.192169952821757],
-  [105.7418047995353, 144.07534849676412, -5.15220659244351],
-  [103.40355774558887, 144.0529570401608, 7.346209763580008],
-  [100.90277134140761, 144.0361019409976, 17.908497999589702],
-  [97.8549766201481, 144.02533132797265, 26.916985457711373],
-  [97.34944355696369, 144.02423643155484, 28.13770678082321],
-  [91.52706481157134, 144.01927600863695, 39.17193327593497],
-  [91.11311803841326, 144.01914272877897, 39.86966271342815],
-  [85.72941152799781, 144.02237439629477, 46.980704434385984],
-  [80.6117480444878, 144.0291882232242, 52.26059449136924],
-  [76.12919639516355, 144.03885567365313, 55.42234609502235],
-  [69.3479159678422, 144.05374533333597, 60.1008687752321],
-  [63.749280039154776, 144.06834204321385, 63.05241327639273],
-  [61.45223611150972, 144.07436191410565, 64.25111666938108],
-  [52.41318598134946, 144.1011851216297, 67.72852908722014],
-  [41.87267762659198, 144.1349110454104, 70.81581337749505],
-  [33.114306088248874, 144.16451166069072, 72.75751472524989],
-  [31.358307915877763, 144.17056412993534, 73.10025509099542],
-  [21.216184337107485, 144.206947591955, 74.51581889421699],
-  [14.504764172390532, 144.2320323944, 75.05372466480785],
-  [12.57504250716821, 144.23925335277926, 75.20507624673209],
-  [11.761041767491768, 144.24240923142045, 75.2254536565743],
-  [-1.9581664263812308, 144.29561305060284, 75.56316668684363],
-  [-10.186819159260805, 144.328644155746, 75.32282889629754],
-  [-18.171007406607945, 144.36131406368204, 74.84439872660866],
-  [-28.204554510983943, 144.40369538677243, 73.71886893623525],
-  [-40.00144701174986, 144.45598016442574, 71.42462215841546],
-  [-50.49115883564949, 144.50437785202655, 68.63067600426862],
-  [-51.29691849043095, 144.5082182718774, 68.36750410106404],
-  [-58.37176874271708, 144.54259050493332, 65.79892012678914],
-  [-60.13763415367492, 144.5515347509299, 65.0134573504514],
-  [-67.09674142367368, 144.58756906577165, 61.607234767405544],
-  [-71.82146669098705, 144.61262564911098, 59.06057980411704],
-  [-79.03418424829788, 144.6545142714681, 53.734402078078496],
-  [-85.33182739134965, 144.69583167075825, 47.208226521163134],
-  [-88.34471551921233, 144.71802188931858, 43.12767106083217],
-  [-91.5371596712735, 144.7420760352775, 38.58979804662475],
-  [-93.38840979798549, 144.75677703703894, 35.66082431549038],
-  [-97.64055419435702, 144.80115653342307, 24.736365618302774],
-  [-97.96707025907416, 144.80456919716525, 23.895583664622475],
-  [-100.08022044317275, 144.83297934144807, 15.953308588077723],
-  [-101.12791611945443, 144.85151735390093, 10.254835581831676],
-  [-102.92632645188841, 144.88564561932375, -0.43915666936578324],
-  [-103.60200553755524, 144.9036400507312, -6.502351806916692],
-  [-103.589144733658, 144.90381643902583, -6.592146151106304],
-  [-103.53321293794329, 144.90377607204815, -6.663337069737713],
-  [-103.44920816134074, 144.90353020799242, -6.697006419703103],
+//Data that we will for looping the function and for sort the data
+const DataLoop = [
+  "label",
+  "CF",
+  "PSFR",
+  "SSR",
+  "PSBR",
+  "CB",
+  "PSBL",
+  "SSL",
+  "PSFL",
 ];
-export const landco = [
-  3.5490177827792144, 148.82072347024996, -61.82484905377971,
+
+//Data to find from the json file (Label the name of nearby coordinates from the json)
+
+// __________________________________________________________________________________________________________________________//
+// If you want to find more points just add obejects in this array And also add the same thing in the " DataToDisplay".
+// __________________________________________________________________________________________________________________________//
+
+const DataToFind = [
+  {
+    label: "Bust",
+    CF: "Centre Chest Point",
+    PSFR: "Right Bust Point",
+    SSR: "front view right side bust",
+    PSBR: "back view right side bust",
+    CB: "**",
+    PSBL: "back view left side bust",
+    SSL: "front view left side bust",
+    PSFL: "Left Bust Point",
+  },
+  {
+    label: "Waist",
+    CF: "Abdomen Point",
+    PSFR: "**",
+    SSR: "**",
+    PSBR: "**",
+    CB: "Small of Back Point",
+    PSBL: "**",
+    SSL: "**",
+    PSFL: "**",
+  },
+  {
+    label: "Hip",
+    CF: "Buckle Point",
+    PSFR: "Trouser Waistline Front Right Point",
+    SSR: "Trouser Waistline Front Rightmost Point",
+    PSBR: "Trouser Waistline Right Backmost Point",
+    CB: "Waistline Back Center Point",
+    PSBL: "Trouser Waistline Left Backmost Point",
+    SSL: "Trouser Waistline Front Leftmost Point",
+    PSFL: "Trouser Waistline Front Left Point",
+  },
 ];
-var Bust_Girth = 0;
-var Bust_CF = 0;
-var Bust_PSFR = 0;
-var Bust_SSR = 0;
-var Bust_PSBR = 0;
-var Bust_CB = 0;
-var Bust_PSBL = 0;
-var Bust_SSL = 0;
-var Bust_PSFL = 0;
 
-var Waist_Girth = 0;
-var Waist_CF = 0;
-var Waist_PSFR = 0;
-var Waist_SSR = 0;
-var Waist_PSBR = 0;
-var Waist_CB = 0;
-var Waist_PSBL = 0;
-var Waist_SSL = 0;
-var Waist_PSFL = 0;
+// Data that return from the FindMinimumDistance Function
+const DataToDisplay = [
+  {
+    label: "Bust",
+    girth: 0,
+    CF: 0,
+    PSFR: 0,
+    SSR: 0,
+    PSBR: 0,
+    CB: 0,
+    PSBL: 0,
+    SSL: 0,
+    PSFL: 0,
+  },
+  {
+    label: "Waist",
+    girth: 0,
+    CF: 0,
+    PSFR: 0,
+    SSR: 0,
+    PSBR: 0,
+    CB: 0,
+    PSBL: 0,
+    SSL: 0,
+    PSFL: 0,
+  },
+  {
+    label: "Hip",
+    girth: 0,
+    CF: 0,
+    PSFR: 0,
+    SSR: 0,
+    PSBR: 0,
+    CB: 0,
+    PSBL: 0,
+    SSL: 0,
+    PSFL: 0,
+  },
+];
 
-var Hip_Girth = 0;
-var Hip_CF = 0;
-var Hip_PSFR = 0;
-var Hip_SSR = 0;
-var Hip_PSBR = 0;
-var Hip_CB = 0;
-var Hip_PSBL = 0;
-var Hip_SSL = 0;
-var Hip_PSFL = 0;
+//Function for displaying the data in a table format.
+const displayDataInTable = (data) => {
+  data.forEach((item) => {
+    const row = document.querySelector(`#tr-${item.label.toLowerCase()}`);
+    console.log(item.label.toLowerCase());
+    Object.values(item).forEach((value) => {
+      const cell = document.createElement("td");
+      cell.textContent =
+        typeof value === "number"
+          ? (Math.round(value * 100) / 100).toFixed(2)
+          : value;
+      row.appendChild(cell);
+    });
+  });
+};
+
+// Calculate the distance  between two points
+// const calculateDistance = (point1, point2) => {
+//   const [x1, y1, z1] = point1;
+//   const [x2, y2, z2] = point2;
+//   return Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2 + (z2 - z1) ** 2);
+// };
+
+// Minimum distance Function for finding the minimum distance
+// const FindMinimumDistance = (landmarkCoordinate, nearbyCoordinates) => {
+//   let minDistance = Number.POSITIVE_INFINITY;
+
+//   // Loop to calculate the distance from the landmark coordinate
+//   for (const coordinate of nearbyCoordinates) {
+//     const dist = calculateDistance(landmarkCoordinate, coordinate);
+//     if (dist < minDistance) {
+//       minDistance = dist;
+//     }
+//   }
+//   // console.log({ "Minimum distance ": minDistance });
+//   return minDistance;
+// };
+
+// Proccessing  the data from the Two json file and Formating the data for displaying
+Promise.all([FetchDatawithOutDress, FetchDataWithDress])
+  .then(([one, two]) => {
+    DataToFind.forEach((e) => {
+      const nearbyCoordinates = two.girths
+        .filter((i) => i.label === e.label)
+        .map((i) => i.pointcollection);
+      // Changing the data format.(form {x:***,y:***,z:***} to [***,***,***])
+      const transformedNearbyCoordinates = nearbyCoordinates[0][0].map(
+        (obj) => [obj.x, obj.y, obj.z]
+      );
+      DataLoop.forEach((i) => {
+        const Girth = one.girths
+          .filter((j) => j.label === e.label)
+          .map((j) => j.girth);
+
+        const landmarkCoordinate = one.landmarkPoints
+          .filter((j) => j.label === e[i])
+          .map((j) => j.position);
+        if (!landmarkCoordinate[0]) {
+          console.log("Non");
+        } else {
+          // Changing the data format.(form {x:***,y:***,z:***} to [***,***,***])
+          const transformedLandmarkCoordinate = landmarkCoordinate.map(
+            (obj) => [obj.x, obj.y, obj.z]
+          );
+          DataToDisplay.forEach((z) => {
+            if (z.label === e.label) {
+              z.girth = Girth;
+              // Calling the FindMinimumDistance and assigning the return value to corresponding varible.
+              z[i] = FindMinimumDistance(
+                transformedLandmarkCoordinate[0],
+                transformedNearbyCoordinates
+              );
+            }
+          });
+        }
+      });
+    });
+    // Display Table function calling
+    displayDataInTable(DataToDisplay);
+  })
+  .catch((error) => {
+    console.error("Error:", error);
+  });
+
+// Maximum at X axis and minimum point at Z axis
+const findFarAwayPointOnXAxisAndClosestPointAtZAxis = (startingPoint) => {
+  const nearbyCoordinates = [
+    [2, 2, 2],
+    [3, 3, 3],
+    [4, 4, 4],
+    [5, 5, 5],
+    [6, 6, 6],
+    [2, 2, 2],
+    [3, 3, 3],
+    [4, 4, 4],
+    [5, 5, 5],
+    [6, 6, 6],
+    [2, 2, 2],
+    [3, 3, 3],
+    [4, 4, 4],
+    [5, 5, 5],
+    [6, 6, 6],
+    [2, 2, 2],
+    [3, 3, 3],
+    [4, 4, 4],
+    [5, 5, 5],
+    [6, 6, 6],
+    [2, 2, 2],
+    [3, 3, 3],
+    [4, 4, 4],
+    [5, 5, 5],
+    [6, 6, 6],
+    [2, 2, 2],
+    [3, 3, 3],
+    [4, 4, 4],
+    [5, 5, 5],
+    [6, 6, 6],
+    [2, 2, 2],
+    [3, 3, 3],
+    [4, 4, 4],
+    [5, 5, 5],
+    [6, 6, 6],
+    [2, 2, 2],
+    [3, 3, 3],
+    [4, 4, 4],
+    [5, 5, 5],
+    [6, 6, 6],
+    [2, 2, 2],
+    [3, 3, 3],
+    [4, 4, 4],
+    [5, 5, 5],
+    [6, 6, 6],
+    [2, 2, 2],
+    [3, 3, 3],
+    [4, 4, 4],
+    [5, 5, 5],
+    [6, 6, 6],
+    [2, 2, 2],
+    [3, 3, 3],
+    [4, 4, 4],
+    [5, 5, 5],
+    [6, 6, 6],
+  ];
+
+  let farthestXCoordinate = null;
+  let farthestXCoordinateXValue = -Infinity;
+  let closestZCoordinate = null;
+  let closestZCoordinateZValue = Infinity;
+
+  for (const coordinate of nearbyCoordinates) {
+    const xDiff = coordinate[0] - startingPoint[0];
+    const zDiff = coordinate[2] - startingPoint[2];
+
+    if (xDiff > farthestXCoordinateXValue) {
+      farthestXCoordinateXValue = xDiff;
+      farthestXCoordinate = coordinate;
+    }
+
+    if (zDiff < closestZCoordinateZValue && zDiff !== 0) {
+      // Avoid division by zero error
+      closestZCoordinateZValue = zDiff;
+      closestZCoordinate = coordinate;
+    }
+  }
+
+  console.log(
+    `The farthest point on the X-axis from the starting point (${startingPoint[0]},${startingPoint[1]},${startingPoint[2]}) is (${farthestXCoordinate[0]},${farthestXCoordinate[1]}). The closest point on the Z-axis is (${closestZCoordinate[0]},${closestZCoordinate[1]},${closestZCoordinate[2]})`
+  );
+};
+
+findFarAwayPointOnXAxisAndClosestPointAtZAxis([0, 0, 0]);
