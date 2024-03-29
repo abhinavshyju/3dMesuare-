@@ -97,7 +97,7 @@ const DataToDisplay = [
 const displayDataInTable = (data) => {
   data.forEach((item) => {
     const row = document.querySelector(`#tr-${item.label.toLowerCase()}`);
-    console.log(item.label.toLowerCase());
+    // console.log(item.label.toLowerCase());
     Object.values(item).forEach((value) => {
       const cell = document.createElement("td");
       cell.textContent =
@@ -170,8 +170,9 @@ async function getgirth(girthName) {
   }
 }
 
-// getgirthPoints("UA_women_scaled1.json", "Bust Contoured");
-// getLandmarkPoints("UA_women_scaled1.json", "Centre Chest Point");
+// getgirthPoints( "Bust Contoured");
+// getLandmarkPoints( "Centre Chest Point");
+// getgirth("Centre Chest Point")
 
 const calculateMinimumDistance = async (landmarkLabel, girthLabel) => {
   try {
@@ -200,7 +201,6 @@ const calculateMinimumDistance = async (landmarkLabel, girthLabel) => {
     throw error;
   }
 };
-calculateMinimumDistance("Centre Chest Point", "Bust");
 
 const resultJosn = async () => {
   try {
@@ -224,3 +224,13 @@ const resultJosn = async () => {
   }
 };
 resultJosn();
+
+const CheckIndividual = async (landmarkLabel, girthLabel) => {
+  console.log(
+    "-----------------------------------------------\n   Minimum distance : " +
+      (await calculateMinimumDistance(landmarkLabel, girthLabel)) +
+      "\n-----------------------------------------------"
+  );
+};
+
+CheckIndividual("Centre Chest Point", "Bust");
