@@ -1,73 +1,499 @@
-<html>
-  <head>
-    <title>Fit Calculator</title>
-  </head>
-  <body>
-    <h1>Fit Calculator</h1>
-    <form>
-      <label for="measurement">Measurement:</label>
-      <input type="number" id="measurement" name="measurement">
-      <br>
-      <label for="bust">Bust:</label>
-      <input type="number" id="bust" name="bust">
-      <br>
-      <label for="waist">Waist:</label>
-      <input type="number" id="waist" name="waist">
-      <br>
-      <button type="submit">Calculate Fit</button>
-    </form>
-    <p id="fit"></p>
-    <script>
-      const measurement = document.getElementById("measurement");
-      const bust = document.getElementById("bust");
-      const waist = document.getElementById("waist");
-      const fit = document.getElementById("fit");
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Body Garment Fit Analysis</title>
+</head>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://codepen.io/gymratpacks/pen/VKzBEp#0">
+<link href='https://fonts.googleapis.com/css?family=Nunito:400,300' rel='stylesheet' type='text/css'>
+<script src="https://cdn.tailwindcss.com"></script>
 
-      const calculateFit = () => {
-        const value = measurement.value;
-        const bustValue = bust.value;
-        const waistValue = waist.value;
+<style>
+body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 
-        if (value >= 0 && value <= 5) {
-          fit.textContent = "Tight Fit";
-        } else if (value > 5 && value <= 10) {
-          fit.textContent = "Regular Fit";
-        } else if (value > 10 && value <= 15) {
-          fit.textContent = "Loose Fit";
-        } else if (value > 15 && value <= 25) {
-          fit.textContent = "Very Loose Fit";
-        } else {
-          fit.textContent = "Invalid Measurement";
-        }
+  *, *:before, *:after {
+-moz-box-sizing: border-box;
+-webkit-box-sizing: border-box;
+box-sizing: border-box;
+}
 
-        if (bustValue >= 0 && bustValue <= 5) {
-          fit.textContent += "Tight Fit";
-        } else if (bustValue > 5 && bustValue <= 10) {
-          fit.textContent += "Regular Fit";
-        } else if (bustValue > 10 && bustValue <= 15) {
-          fit.textContent += "Loose Fit";
-        } else if (bustValue > 15 && bustValue <= 25) {
-          fit.textContent += "Very Loose Fit";
-        } else {
-          fit.textContent += "Invalid Measurement";
-        }
+body {
+font-family: Arial, Helvetica, sans-serif;
+color: #384047;
+}
 
-        if (waistValue >= 0 && waistValue <= 5) {
-          fit.textContent += "Tight Fit";
-        } else if (waistValue > 5 && waistValue <= 10) {
-          fit.textContent += "Regular Fit";
-        } else if (waistValue > 10 && waistValue <= 15) {
-          fit.textContent += "Loose Fit";
-        } else if (waistValue > 15 && waistValue <= 25) {
-          fit.textContent += "Very Loose Fit";
-        } else {
-          fit.textContent += "Invalid Measurement";
-        }
-      };
+form {
+max-width: 300px;
+padding: 10px 20px;
+background: #f4f7f8;
+border-radius: 8px;
+}
 
-      measurement.addEventListener("input", calculateFit);
-      bust.addEventListener("input", calculateFit);
-      waist.addEventListener("input", calculateFit);
-    </script>
-  </body>
+h1 {
+margin: 0 0 30px 0;
+text-align: center;
+}
+
+input[type="text"],
+textarea,
+select {
+background: rgba(255,255,255,0.1);
+border: none;
+font-size: 16px;
+height: auto;
+margin: 0;
+outline: 0;
+padding: 15px;
+width: 100%;
+background-color: #e8eeef;
+color: #8a97a0;
+box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
+margin-bottom: 30px;
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+margin: 0 4px 8px 0;
+}
+
+select {
+padding: 6px;
+height: 32px;
+border-radius: 2px;
+}
+
+button {
+padding: 19px 39px 18px 39px;
+background-color: #161616;
+font-size: 18px;
+text-align: center;
+font-style: normal;
+border-radius: 5px;
+width: 100%;
+border-width: 1px 1px 3px;
+margin-bottom: 50px;
+}
+
+
+legend {
+font-size: 1.4em;
+margin-bottom: 10px;
+}
+
+label {
+display: block;
+margin-bottom: 8px;
+}
+
+label.light {
+
+display: inline;
+}
+
+
+@media screen and (min-width: 480px) {
+
+form {
+max-width: 480px;
+}
+
+
+
+* table {
+border-collapse: collapse;
+border-spacing: 0;
+width:100%;
+border: 5px solid #ddd;
+margin-left: auto;
+margin-right: 0;
+font-family:Arial, Helvetica, sans-serif;
+} */
+
+tr {
+padding: 10px 5px;
+}
+
+th,
+td {
+text-align: left;
+padding: 8px;
+}
+
+tr:nth-child(even) {
+background-color: #f2f2f2
+}
+}
+
+</style>
+<body class="w3-light-grey w3-content" style="max-width:1600px">
+
+<!-- Sidebar/menu -->
+<div class="w3-sidebar w3-white" style="z-index:3;" id="mySidebar"><br>
+  <div class="w3-container">
+    <img src=".jpg" style="width:15%;" class="w3-round"><br><br>
+    <h4><b>VIEWS</b></h4>
+  </div>
+  <div class="w3-bar-block">
+    <a href="model.html"  class="w3-bar-item w3-button w3-padding "><i class="fa fa-th-large fa-fw w3-margin-right"></i>3D MODEL</a>
+    <a href="slicing.html"  class="w3-bar-item w3-button w3-padding "><i class="fa fa-th-large fa-fw w3-margin-right"></i>SLICING</a>
+    <a href="section.html"  class="w3-bar-item w3-button w3-padding "><i class="fa fa-th-large fa-fw w3-margin-right"></i>CROSS SECTION</a>
+    <a href="calculation.html"  class="w3-bar-item w3-button w3-padding"><i class="fa fa-user fa-fw w3-margin-right"></i>DISTANCE CALCULATION</a> 
+    <a href="report.html"  class="w3-bar-item w3-button w3-padding"><i class="fa fa-envelope fa-fw w3-margin-right"></i>FIT ASSESSMENT</a>
+  </div>
+</div>
+
+  <!-- Header -->
+  <div class="w3-content" style="margin-left: 200px;">
+
+    <div class="w3-container" >
+    <h1><b style="font-family: 'Arial', sans-serif;">3D BODY GARMENT FIT ANALYSIS</b></h1>
+    <div class="w3-section w3-bottombar w3-padding-10">
+
+    </div>
+    </div>
+  </div>
+
+
+  <!-- Gapanalysis-->
+  <div style="margin-left: 200px;">
+    <div class="form" style="float: left;width: 50vb;">
+      <form action="index.html" method="post">
+        <h1><b>FIT ANALYSIS REPORT</b></h1>
+        
+        <fieldset>
+          
+          <legend> </legend>
+        
+          <label for="brand">BRAND:</label>
+          <input type="text" id="brand" name="user_brand">
+        
+          <label for="fit">FIT:</label>
+          <input type="text" id="fit" name="user_fit">
+
+          <label for="style">STYLE:</label>
+          <input type="text" id="style" name="user_style">
+
+          <label for="style">SIZE:</label>
+          <input type="text" id="style" name="user_style">
+
+          <label for="bio">DESCRIPTION:</label>
+          <textarea id="bio" name="user_bio"></textarea>
+
+          <label for="style">FABRICS:</label>
+          <input type="text" id="style" name="user_style">
+  
+          <label>MODEL:</label>
+          <input type="radio" id="human" value="under_13" name="user_age"><label for="under_13" class="light">Model</label><br>
+          <input type="radio" id="dressform" value="over_13" name="user_age"><label for="over_13" class="light">Dressform</label>
+          
+        </fieldset>
+       
+        <button type="submit">REPORT</button>
+        <button type="submit">FIT</button>
+        <button type="submit">POM</button>
+       </form>
+      </div>
+      <div id= "fit calculation" style="overflow-y:auto;margin-left: 50vb;">
+        <table>
+          <tr style="background: color #3a3838;">
+            <th> POM</th>
+            <th>LEVEL</th>
+            <th>LANDMARK</th>
+            <th>REQUIRED MEASUREMENT</th>
+            <th>TOLERANCE</th>
+            <th>ACTUAL MEASUREMENT</th>
+            <th>DIFFERENCE</th>
+            <th>RESULT</th>
+          </tr>
+          <tr>
+            <td id="pom1">1.1</td>
+            <td id="level1">Bust</td>
+            <td id="landmark1">CF</td>
+            <td id="reqm1"><input type="text" style="width: 60px;">mm</td>
+            <td id="tol1"><input type="text" style="width: 60px;">mm</td>
+            <td id="act1">mm</td>
+            <td id="dif1">mm</td>
+            <td id="result1"></td>
+          </tr>
+          <tr>
+            <td id="pom2">1.2</td>
+            <td id="level2">Bust</td>
+            <td id="landmark2">PSFR</td>
+            <td id="reqm2"><input type="text" style="width: 60px;">mm</td>
+            <td id="tol2"><input type="text" style="width: 60px;">mm</td>
+            <td id="act2">mm</td>
+            <td id="dif2">mm</td>
+            <td id="result2"></td>
+          </tr>
+          <tr>
+            <td id="pom3">1.3</td>
+            <td id="level3">Bust</td>
+            <td id="landmark3">SSR</td>
+            <td id="reqm3"><input type="text" style="width: 60px;">mm</td>
+            <td id="tol3"><input type="text" style="width: 60px;">mm</td>
+            <td id="act3"></td>
+            <td id="dif3"></td>
+            <td id="result3"></td>
+          </tr>
+          <tr>
+            <td id="pom4">1.4</td>
+            <td id="level4">Bust</td>
+            <td id="landmark4">PSBR</td>
+            <td id="reqm4"><input type="text" style="width: 60px;">mm</td>
+            <td id="tol4"><input type="text" style="width: 60px;">mm</td>
+            <td id="act4"></td>
+            <td id="dif4"></td>
+            <td id="result4"></td>
+          </tr>
+          <tr>
+            <td id="pom5">1.5</td>
+            <td id="level5">Bust</td>
+            <td id="landmark5">CB</td>
+            <td id="reqm5"><input type="text" style="width: 60px;">mm</td>
+            <td id="tol5"><input type="text" style="width: 60px;">mm</td>
+            <td id="act5"></td>
+            <td id="dif5"></td>
+            <td id="result5"></td>
+          </tr>
+          <tr>
+            <td id="pom6">1.6</td>
+            <td id="level6">Bust</td>
+            <td id="landmark6">PSBL</td>
+            <td id="reqm6"><input type="text" style="width: 60px;">mm</td>
+            <td id="tol6"><input type="text" style="width: 60px;">mm</td>
+            <td id="act6"></td>
+            <td id="dif6"></td>
+            <td id="result6
+            "></td>
+          </tr>
+          <tr>
+            <td id="pom7">1.7</td>
+            <td id="level7">Bust</td>
+            <td id="landmark7">SSL</td>
+            <td id="reqm7"><input type="text" style="width: 60px;">mm</td>
+            <td id="tol7"><input type="text" style="width: 60px;">mm</td>
+            <td id="act7"></td>
+            <td id="dif7"></td>
+            <td id="result7"></td>
+          </tr>
+          <tr>
+            <td id="pom8">1.8</td>
+            <td id="level8">Bust</td>
+            <td id="landmark8">PSFL</td>
+            <td id="reqm8"><input type="text" style="width: 60px;">mm</td>
+            <td id="tol8"><input type="text" style="width: 60px;">mm</td>
+            <td id="act8"></td>
+            <td id="dif8"></td>
+            <td id="result8"></td>
+          </tr>
+          <tr>
+            <td id="pom9">1.9</td>
+            <td id="level9">Bust</td>
+            <td id="landmark9">Avg.</td>
+            <td id="reqm9"><input type="text" style="width: 60px;">mm</td>
+            <td id="tol9"><input type="text" style="width: 60px;">mm</td>
+            <td id="act9"></td>
+            <td id="dif9"></td>
+            <td id="result9"></td>
+          </tr>
+
+          <!-- Waist level-->
+          <tr>
+            <td id="pom1">1.1</td>
+            <td id="level1">Waist</td>
+            <td id="landmark1">CF</td>
+            <td id="reqm1"><input type="text" style="width: 60px;">mm</td>
+            <td id="tol1"><input type="text" style="width: 60px;">mm</td>
+            <td id="act1">mm</td>
+            <td id="dif1">mm</td>
+            <td id="result1"></td>
+          </tr>
+          <tr>
+            <td id="pom2">1.2</td>
+            <td id="level2">Waist</td>
+            <td id="landmark2">PSFR</td>
+            <td id="reqm2"><input type="text" style="width: 60px;">mm</td>
+            <td id="tol2"><input type="text" style="width: 60px;">mm</td>
+            <td id="act2">mm</td>
+            <td id="dif2">mm</td>
+            <td id="result2"></td>
+          </tr>
+          <tr>
+            <td id="pom3">1.3</td>
+            <td id="level3">Waist</td>
+            <td id="landmark3">SSR</td>
+            <td id="reqm3"><input type="text" style="width: 60px;">mm</td>
+            <td id="tol3"><input type="text" style="width: 60px;">mm</td>
+            <td id="act3"></td>
+            <td id="dif3"></td>
+            <td id="result3"></td>
+          </tr>
+          <tr>
+            <td id="pom4">1.4</td>
+            <td id="level4">Waist</td>
+            <td id="landmark4">PSBR</td>
+            <td id="reqm4"><input type="text" style="width: 60px;">mm</td>
+            <td id="tol4"><input type="text" style="width: 60px;">mm</td>
+            <td id="act4"></td>
+            <td id="dif4"></td>
+            <td id="result4"></td>
+          </tr>
+          <tr>
+            <td id="pom5">1.5</td>
+            <td id="level5">Waist</td>
+            <td id="landmark5">CB</td>
+            <td id="reqm5"><input type="text" style="width: 60px;">mm</td>
+            <td id="tol5"><input type="text" style="width: 60px;">mm</td>
+            <td id="act5"></td>
+            <td id="dif5"></td>
+            <td id="result5"></td>
+          </tr>
+          <tr>
+            <td id="pom6">1.6</td>
+            <td id="level6">Waist</td>
+            <td id="landmark6">PSBL</td>
+            <td id="reqm6"><input type="text" style="width: 60px;">mm</td>
+            <td id="tol6"><input type="text" style="width: 60px;">mm</td>
+            <td id="act6"></td>
+            <td id="dif6"></td>
+            <td id="result6
+            "></td>
+          </tr>
+          <tr>
+            <td id="pom7">1.7</td>
+            <td id="level7">Waist</td>
+            <td id="landmark7">SSL</td>
+            <td id="reqm7"><input type="text" style="width: 60px;">mm</td>
+            <td id="tol7"><input type="text" style="width: 60px;">mm</td>
+            <td id="act7"></td>
+            <td id="dif7"></td>
+            <td id="result7"></td>
+          </tr>
+          <tr>
+            <td id="pom8">1.8</td>
+            <td id="level8">Waist</td>
+            <td id="landmark8">PSFL</td>
+            <td id="reqm8"><input type="text" style="width: 60px;">mm</td>
+            <td id="tol8"><input type="text" style="width: 60px;">mm</td>
+            <td id="act8"></td>
+            <td id="dif8"></td>
+            <td id="result8"></td>
+          </tr>
+          <tr>
+            <td id="pom9">1.9</td>
+            <td id="level9">Waist</td>
+            <td id="landmark9">Avg.</td>
+            <td id="reqm9"><input type="text" style="width: 60px;">mm</td>
+            <td id="tol9"><input type="text" style="width: 60px;">mm</td>
+            <td id="act9"></td>
+            <td id="dif9"></td>
+            <td id="result9"></td>
+          </tr>
+          
+                    <!-- Hip level-->
+                    <tr>
+                      <td id="pom1">1.1</td>
+                      <td id="level1">Hip</td>
+                      <td id="landmark1">CF</td>
+                      <td id="reqm1"><input type="text" style="width: 60px;">mm</td>
+                      <td id="tol1"><input type="text" style="width: 60px;">mm</td>
+                      <td id="act1">mm</td>
+                      <td id="dif1">mm</td>
+                      <td id="result1"></td>
+                    </tr>
+                    <tr>
+                      <td id="pom2">1.2</td>
+                      <td id="level2">Hip</td>
+                      <td id="landmark2">PSFR</td>
+                      <td id="reqm2"><input type="text" style="width: 60px;">mm</td>
+                      <td id="tol2"><input type="text" style="width: 60px;">mm</td>
+                      <td id="act2">mm</td>
+                      <td id="dif2">mm</td>
+                      <td id="result2"></td>
+                    </tr>
+                    <tr>
+                      <td id="pom3">1.3</td>
+                      <td id="level3">Hip</td>
+                      <td id="landmark3">SSR</td>
+                      <td id="reqm3"><input type="text" style="width: 60px;">mm</td>
+                      <td id="tol3"><input type="text" style="width: 60px;">mm</td>
+                      <td id="act3"></td>
+                      <td id="dif3"></td>
+                      <td id="result3"></td>
+                    </tr>
+                    <tr>
+                      <td id="pom4">1.4</td>
+                      <td id="level4">Hip</td>
+                      <td id="landmark4">PSBR</td>
+                      <td id="reqm4"><input type="text" style="width: 60px;">mm</td>
+                      <td id="tol4"><input type="text" style="width: 60px;">mm</td>
+                      <td id="act4"></td>
+                      <td id="dif4"></td>
+                      <td id="result4"></td>
+                    </tr>
+                    <tr>
+                      <td id="pom5">1.5</td>
+                      <td id="level5">Hip</td>
+                      <td id="landmark5">CB</td>
+                      <td id="reqm5"><input type="text" style="width: 60px;">mm</td>
+                      <td id="tol5"><input type="text" style="width: 60px;">mm</td>
+                      <td id="act5"></td>
+                      <td id="dif5"></td>
+                      <td id="result5"></td>
+                    </tr>
+                    <tr>
+                      <td id="pom6">1.6</td>
+                      <td id="level6">Hip</td>
+                      <td id="landmark6">PSBL</td>
+                      <td id="reqm6"><input type="text" style="width: 60px;">mm</td>
+                      <td id="tol6"><input type="text" style="width: 60px;">mm</td>
+                      <td id="act6"></td>
+                      <td id="dif6"></td>
+                      <td id="result6
+                      "></td>
+                    </tr>
+                    <tr>
+                      <td id="pom7">1.7</td>
+                      <td id="level7">Hip</td>
+                      <td id="landmark7">SSL</td>
+                      <td id="reqm7"><input type="text" style="width: 60px;">mm</td>
+                      <td id="tol7"><input type="text" style="width: 60px;">mm</td>
+                      <td id="act7"></td>
+                      <td id="dif7"></td>
+                      <td id="result7"></td>
+                    </tr>
+                    <tr>
+                      <td id="pom8">1.8</td>
+                      <td id="level8">Hip</td>
+                      <td id="landmark8">PSFL</td>
+                      <td id="reqm8"><input type="text" style="width: 60px;">mm</td>
+                      <td id="tol8"><input type="text" style="width: 60px;">mm</td>
+                      <td id="act8"></td>
+                      <td id="dif8"></td>
+                      <td id="result8"></td>
+                    </tr>
+                    <tr>
+                      <td id="pom9">1.9</td>
+                      <td id="level9">Hip</td>
+                      <td id="landmark9">Avg.</td>
+                      <td id="reqm9"><input type="text" style="width: 60px;">mm</td>
+                      <td id="tol9"><input type="text" style="width: 60px;">mm</td>
+                      <td id="act9"></td>
+                      <td id="dif9"></td>
+                      <td id="result9"></td>
+                    </tr>
+                    
+        </table>
+
+      </div>
+  </div>
+    
+
+
+
+</body>
 </html>

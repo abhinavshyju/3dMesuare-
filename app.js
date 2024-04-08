@@ -106,7 +106,7 @@ const init = function () {
   loadGirths();
 };
 
-async function getgirthPoints(pointsJson, girthName) {
+async function getGrithPoints(pointsJson, girthName) {
   try {
     const response = await fetch("./" + pointsJson); // Adjust the path as needed
     const data = await response.json();
@@ -231,12 +231,13 @@ async function loadGirths() {
   girths.forEach(async (girth) => {
     const sceneContainer = arrScene.find((sc) => sc.name === girth[0]);
     if (sceneContainer) {
-      const points1 = await getgirthPoints(girth[2], girth[1]);
-      const points2 = await getgirthPoints(girth[3], girth[1]);
+      const points1 = await getGrithPoints(girth[2], girth[1]);
+      const points2 = await getGrithPoints(girth[3], girth[1]);
       await render3DPoints(sceneContainer.scene, points1, girth[4], true);
       await render3DPoints(basescene, points1, girth[4], false, 0.1);
       await render3DPoints(sceneContainer.scene, points2, girth[5], true);
       await render3DPoints(dressedscene, points2, girth[5], false, 0.1);
+      // console.log({ points1, points2 });
       renderIntersectionPoints(
         sceneContainer.scene,
         points1,
@@ -317,6 +318,12 @@ function renderIntersectionPoints(scene, points, color, scalingFactor) {
     (pointx.x / 2) * -1
   );
 
+  // console.log({
+  //   z0Intersections,
+  //   x0Intersections,
+  //   xmidIntersections,
+  //   x_midIntersections,
+  // });
   // Step 2: Render Intersection Points
   z0Intersections.forEach((point) =>
     renderPoint(scene, point, color, scalingFactor)
@@ -333,6 +340,9 @@ function renderIntersectionPoints(scene, points, color, scalingFactor) {
 }
 
 function renderPoint(scene, point, color, scalingFactor) {
+  // if (color.b == 0) {
+  //   console.log(point);
+  // }
   const sphere = BABYLON.MeshBuilder.CreateSphere(
     "sphere",
     { diameter: 10 * scalingFactor },
@@ -396,5 +406,16 @@ function calculateMinimumDistance(point1, pointsSet2) {
 
   return minDistance;
 }
+
+const CheckPoints = async () => {
+  const points = await getGrithPoints(
+    "UA_women_scaled1.json",
+    "Chest Contoured"
+  );
+  const result = findIntersectionPoints(points);
+  console.log(result);
+};
+
+CheckPoints();
 
 init();
