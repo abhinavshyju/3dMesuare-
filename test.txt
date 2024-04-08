@@ -1,0 +1,290 @@
+<table>
+        <tr style="background: color #3a3838;">
+          <th> POM</th>
+          <th>LEVEL</th>
+          <th>LANDMARK</th>
+          <th>REQUIRED MEASUREMENT</th>
+          <th>TOLERANCE</th>
+          <th>ACTUAL MEASUREMENT</th>
+          <th>DIFFERENCE</th>
+          <th>RESULT</th>
+        </tr>
+        <tr>
+          <td id="pom1">1.1</td>
+          <td id="level1">Bust</td>
+          <td id="landmark1">CF</td>
+          <td id="reqm1"><input type="number" style="width: 60px;" onchange="calculateDifference()" id="reqm1In">mm</td>
+          <td id="tol1"><input type="number" style="width: 60px;" onchange="calculateDifference()" id="tol1In">mm</td>
+          <td id="act1">mm</td>
+          <td id="dif1">mm</td>
+          <td id="result1"></td>
+        </tr>
+        <tr>
+          <td id="pom2">1.2</td>
+          <td id="level2">Bust</td>
+          <td id="landmark2">PSFR</td>
+          <td id="reqm2"><input type="text" style="width: 60px;">mm</td>
+          <td id="tol2"><input type="text" style="width: 60px;">mm</td>
+          <td id="act2">mm</td>
+          <td id="dif2">mm</td>
+          <td id="result2"></td>
+        </tr>
+        <tr>
+          <td id="pom3">1.3</td>
+          <td id="level3">Bust</td>
+          <td id="landmark3">SSR</td>
+          <td id="reqm3"><input type="text" style="width: 60px;">mm</td>
+          <td id="tol3"><input type="text" style="width: 60px;">mm</td>
+          <td id="act3"></td>
+          <td id="dif3"></td>
+          <td id="result3"></td>
+        </tr>
+        <tr>
+          <td id="pom4">1.4</td>
+          <td id="level4">Bust</td>
+          <td id="landmark4">PSBR</td>
+          <td id="reqm4"><input type="text" style="width: 60px;">mm</td>
+          <td id="tol4"><input type="text" style="width: 60px;">mm</td>
+          <td id="act4"></td>
+          <td id="dif4"></td>
+          <td id="result4"></td>
+        </tr>
+        <tr>
+          <td id="pom5">1.5</td>
+          <td id="level5">Bust</td>
+          <td id="landmark5">CB</td>
+          <td id="reqm5"><input type="text" style="width: 60px;">mm</td>
+          <td id="tol5"><input type="text" style="width: 60px;">mm</td>
+          <td id="act5"></td>
+          <td id="dif5"></td>
+          <td id="result5"></td>
+        </tr>
+        <tr>
+          <td id="pom6">1.6</td>
+          <td id="level6">Bust</td>
+          <td id="landmark6">PSBL</td>
+          <td id="reqm6"><input type="text" style="width: 60px;">mm</td>
+          <td id="tol6"><input type="text" style="width: 60px;">mm</td>
+          <td id="act6"></td>
+          <td id="dif6"></td>
+          <td id="result6
+            "></td>
+        </tr>
+        <tr>
+          <td id="pom7">1.7</td>
+          <td id="level7">Bust</td>
+          <td id="landmark7">SSL</td>
+          <td id="reqm7"><input type="text" style="width: 60px;">mm</td>
+          <td id="tol7"><input type="text" style="width: 60px;">mm</td>
+          <td id="act7"></td>
+          <td id="dif7"></td>
+          <td id="result7"></td>
+        </tr>
+        <tr>
+          <td id="pom8">1.8</td>
+          <td id="level8">Bust</td>
+          <td id="landmark8">PSFL</td>
+          <td id="reqm8"><input type="text" style="width: 60px;">mm</td>
+          <td id="tol8"><input type="text" style="width: 60px;">mm</td>
+          <td id="act8"></td>
+          <td id="dif8"></td>
+          <td id="result8"></td>
+        </tr>
+        <tr>
+          <td id="pom9">1.9</td>
+          <td id="level9">Bust</td>
+          <td id="landmark9">Avg.</td>
+          <td id="reqm9"><input type="text" style="width: 60px;">mm</td>
+          <td id="tol9"><input type="text" style="width: 60px;">mm</td>
+          <td id="act9"></td>
+          <td id="dif9"></td>
+          <td id="result9"></td>
+        </tr>
+
+        <!-- Waist level-->
+        <tr>
+          <td id="pom1">1.1</td>
+          <td id="level1">Waist</td>
+          <td id="landmark1">CF</td>
+          <td id="reqm1"><input type="text" style="width: 60px;">mm</td>
+          <td id="tol1"><input type="text" style="width: 60px;">mm</td>
+          <td id="act1">mm</td>
+          <td id="dif1">mm</td>
+          <td id="result1"></td>
+        </tr>
+        <tr>
+          <td id="pom2">1.2</td>
+          <td id="level2">Waist</td>
+          <td id="landmark2">PSFR</td>
+          <td id="reqm2"><input type="text" style="width: 60px;">mm</td>
+          <td id="tol2"><input type="text" style="width: 60px;">mm</td>
+          <td id="act2">mm</td>
+          <td id="dif2">mm</td>
+          <td id="result2"></td>
+        </tr>
+        <tr>
+          <td id="pom3">1.3</td>
+          <td id="level3">Waist</td>
+          <td id="landmark3">SSR</td>
+          <td id="reqm3"><input type="text" style="width: 60px;">mm</td>
+          <td id="tol3"><input type="text" style="width: 60px;">mm</td>
+          <td id="act3"></td>
+          <td id="dif3"></td>
+          <td id="result3"></td>
+        </tr>
+        <tr>
+          <td id="pom4">1.4</td>
+          <td id="level4">Waist</td>
+          <td id="landmark4">PSBR</td>
+          <td id="reqm4"><input type="text" style="width: 60px;">mm</td>
+          <td id="tol4"><input type="text" style="width: 60px;">mm</td>
+          <td id="act4"></td>
+          <td id="dif4"></td>
+          <td id="result4"></td>
+        </tr>
+        <tr>
+          <td id="pom5">1.5</td>
+          <td id="level5">Waist</td>
+          <td id="landmark5">CB</td>
+          <td id="reqm5"><input type="text" style="width: 60px;">mm</td>
+          <td id="tol5"><input type="text" style="width: 60px;">mm</td>
+          <td id="act5"></td>
+          <td id="dif5"></td>
+          <td id="result5"></td>
+        </tr>
+        <tr>
+          <td id="pom6">1.6</td>
+          <td id="level6">Waist</td>
+          <td id="landmark6">PSBL</td>
+          <td id="reqm6"><input type="text" style="width: 60px;">mm</td>
+          <td id="tol6"><input type="text" style="width: 60px;">mm</td>
+          <td id="act6"></td>
+          <td id="dif6"></td>
+          <td id="result6
+            "></td>
+        </tr>
+        <tr>
+          <td id="pom7">1.7</td>
+          <td id="level7">Waist</td>
+          <td id="landmark7">SSL</td>
+          <td id="reqm7"><input type="text" style="width: 60px;">mm</td>
+          <td id="tol7"><input type="text" style="width: 60px;">mm</td>
+          <td id="act7"></td>
+          <td id="dif7"></td>
+          <td id="result7"></td>
+        </tr>
+        <tr>
+          <td id="pom8">1.8</td>
+          <td id="level8">Waist</td>
+          <td id="landmark8">PSFL</td>
+          <td id="reqm8"><input type="text" style="width: 60px;">mm</td>
+          <td id="tol8"><input type="text" style="width: 60px;">mm</td>
+          <td id="act8"></td>
+          <td id="dif8"></td>
+          <td id="result8"></td>
+        </tr>
+        <tr>
+          <td id="pom9">1.9</td>
+          <td id="level9">Waist</td>
+          <td id="landmark9">Avg.</td>
+          <td id="reqm9"><input type="text" style="width: 60px;">mm</td>
+          <td id="tol9"><input type="text" style="width: 60px;">mm</td>
+          <td id="act9"></td>
+          <td id="dif9"></td>
+          <td id="result9"></td>
+        </tr>
+
+        <!-- Hip level-->
+        <tr>
+          <td id="pom1">1.1</td>
+          <td id="level1">Hip</td>
+          <td id="landmark1">CF</td>
+          <td id="reqm1"><input type="text" style="width: 60px;">mm</td>
+          <td id="tol1"><input type="text" style="width: 60px;">mm</td>
+          <td id="act1">mm</td>
+          <td id="dif1">mm</td>
+          <td id="result1"></td>
+        </tr>
+        <tr>
+          <td id="pom2">1.2</td>
+          <td id="level2">Hip</td>
+          <td id="landmark2">PSFR</td>
+          <td id="reqm2"><input type="text" style="width: 60px;">mm</td>
+          <td id="tol2"><input type="text" style="width: 60px;">mm</td>
+          <td id="act2">mm</td>
+          <td id="dif2">mm</td>
+          <td id="result2"></td>
+        </tr>
+        <tr>
+          <td id="pom3">1.3</td>
+          <td id="level3">Hip</td>
+          <td id="landmark3">SSR</td>
+          <td id="reqm3"><input type="text" style="width: 60px;">mm</td>
+          <td id="tol3"><input type="text" style="width: 60px;">mm</td>
+          <td id="act3"></td>
+          <td id="dif3"></td>
+          <td id="result3"></td>
+        </tr>
+        <tr>
+          <td id="pom4">1.4</td>
+          <td id="level4">Hip</td>
+          <td id="landmark4">PSBR</td>
+          <td id="reqm4"><input type="text" style="width: 60px;">mm</td>
+          <td id="tol4"><input type="text" style="width: 60px;">mm</td>
+          <td id="act4"></td>
+          <td id="dif4"></td>
+          <td id="result4"></td>
+        </tr>
+        <tr>
+          <td id="pom5">1.5</td>
+          <td id="level5">Hip</td>
+          <td id="landmark5">CB</td>
+          <td id="reqm5"><input type="text" style="width: 60px;">mm</td>
+          <td id="tol5"><input type="text" style="width: 60px;">mm</td>
+          <td id="act5"></td>
+          <td id="dif5"></td>
+          <td id="result5"></td>
+        </tr>
+        <tr>
+          <td id="pom6">1.6</td>
+          <td id="level6">Hip</td>
+          <td id="landmark6">PSBL</td>
+          <td id="reqm6"><input type="text" style="width: 60px;">mm</td>
+          <td id="tol6"><input type="text" style="width: 60px;">mm</td>
+          <td id="act6"></td>
+          <td id="dif6"></td>
+          <td id="result6
+                      "></td>
+        </tr>
+        <tr>
+          <td id="pom7">1.7</td>
+          <td id="level7">Hip</td>
+          <td id="landmark7">SSL</td>
+          <td id="reqm7"><input type="text" style="width: 60px;">mm</td>
+          <td id="tol7"><input type="text" style="width: 60px;">mm</td>
+          <td id="act7"></td>
+          <td id="dif7"></td>
+          <td id="result7"></td>
+        </tr>
+        <tr>
+          <td id="pom8">1.8</td>
+          <td id="level8">Hip</td>
+          <td id="landmark8">PSFL</td>
+          <td id="reqm8"><input type="text" style="width: 60px;">mm</td>
+          <td id="tol8"><input type="text" style="width: 60px;">mm</td>
+          <td id="act8"></td>
+          <td id="dif8"></td>
+          <td id="result8"></td>
+        </tr>
+        <tr>
+          <td id="pom9">1.9</td>
+          <td id="level9">Hip</td>
+          <td id="landmark9">Avg.</td>
+          <td id="reqm9"><input type="text" style="width: 60px;">mm</td>
+          <td id="tol9"><input type="text" style="width: 60px;">mm</td>
+          <td id="act9"></td>
+          <td id="dif9"></td>
+          <td id="result9"></td>
+        </tr>
+
+      </table>
