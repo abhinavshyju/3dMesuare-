@@ -242,8 +242,7 @@
     var tol = parseFloat(document.getElementById(tolid).value);
 
 
-    console.log(actv, reqM, tol)
-    document.getElementById(diffid).innerText = (reqM - actM);
+   document.getElementById(diffid).innerText = parseFloat((reqM - actM).toFixed(2));
     const tolCheck = () => {
       if (tol > (reqM - actM)) {
         return true
